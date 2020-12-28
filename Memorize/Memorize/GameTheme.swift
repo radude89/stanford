@@ -19,28 +19,27 @@ protocol EmojiMemoryGameTheme {
 }
 
 struct HalloweenEmojiMemoryGameTheme: EmojiMemoryGameTheme {
-    typealias CardContent = String
-    
     let name = "Halloween"
     let emojis = ["👻", "🎃", "🕷", "☠️", "🧟‍♂️", "🕸"].shuffled()
 }
 
 struct FoodEmojiMemoryGameTheme: EmojiMemoryGameTheme {
-    typealias CardContent = String
-    
     let name = "Food"
     let emojis = ["🍏", "🥨", "🥩", "🍢", "🍰", "🍪"].shuffled()
 }
 
 struct ChristmasEmojiGameTheme: EmojiMemoryGameTheme {
-    typealias CardContent = String
-    
     let name = "Christmas"
-    let emojis = ["🎄", "❄️", "⛄️", "🎅", "🇨🇽", "🧑‍🎄"].shuffled()
+    let emojis = ["🎄", "❄️", "⛄️", "🎅", "🌲", "🧑‍🎄"].shuffled()
 }
 
 enum EmojiGameThemeFactory {
-    static func makeEmojiCards(using theme: GameTheme) -> EmojiMemoryGameTheme {
+    static func makeRandomTheme() -> EmojiMemoryGameTheme {
+        let supportedThemes: [EmojiMemoryGameTheme] = [HalloweenEmojiMemoryGameTheme(), FoodEmojiMemoryGameTheme(), ChristmasEmojiGameTheme()]
+        return supportedThemes[Int.random(in: 0..<supportedThemes.count)]
+    }
+    
+    static func makeGameTheme(using theme: GameTheme) -> EmojiMemoryGameTheme {
         switch theme {
         case .halloween:
             return HalloweenEmojiMemoryGameTheme()
