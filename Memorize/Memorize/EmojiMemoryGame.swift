@@ -12,8 +12,7 @@ final class EmojiMemoryGame: ObservableObject {
     @Published private var model: MemoryGame<String>
     private(set) var themeName: String
     
-    init() {
-        let theme = EmojiGameThemeFactory.makeRandomTheme()
+    init(theme: EmojiMemoryGameTheme = EmojiGameThemeFactory.makeRandomTheme()) {
         themeName = theme.name
         model = Self.makeMemoryGame(emojis: theme.emojis)
     }
@@ -40,8 +39,7 @@ final class EmojiMemoryGame: ObservableObject {
         model.choose(card: card)
     }
     
-    func restartGame() {
-        let theme = EmojiGameThemeFactory.makeRandomTheme()
+    func restartGame(theme: EmojiMemoryGameTheme = EmojiGameThemeFactory.makeRandomTheme()) {
         themeName = theme.name
         model = Self.makeMemoryGame(emojis: theme.emojis)
     }
