@@ -12,7 +12,7 @@ import Combine
 // a ViewModel that takes criteria about flights enroute to an airport
 // and @Publishes a list of FAFlight objects from FlightAware API
 // that matches that criteria
-
+/*
 class FlightFetcher: ObservableObject // struct
 {
     // create a FlightFetcher with certain search criteria ...
@@ -64,3 +64,4 @@ class FlightFetcher: ObservableObject // struct
     private(set) var flightAwareRequest: EnrouteRequest!
     private var flightAwareResultsCancellable: AnyCancellable?
 }
+*/
