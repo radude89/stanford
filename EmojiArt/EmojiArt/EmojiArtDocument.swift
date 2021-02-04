@@ -13,6 +13,13 @@ final class EmojiArtDocument: ObservableObject, Identifiable {
     
     // MARK: - Variables
     let id: UUID
+    
+    var url: URL? {
+        didSet {
+            save(emojiArt)
+        }
+    }
+    
     static let palette = "🥨🚀📌🍪🍸☕️"
     
     @Published private var emojiArt: EmojiArt
@@ -33,6 +40,24 @@ final class EmojiArtDocument: ObservableObject, Identifiable {
         }
         
         fetchBackgroundImageData()
+    }
+    
+    init(url: URL) {
+        id = UUID()
+        self.url = url
+        emojiArt = EmojiArt(json: try? Data(contentsOf: url)) ?? EmojiArt()
+        
+        autosaveCancellable = $emojiArt.sink { [self] emojiArt in
+            save(emojiArt)
+        }
+    }
+    
+    private func save(_ emojiArt: EmojiArt) {
+        guard let url = url else {
+            return
+        }
+        
+        try? emojiArt.json?.write(to: url)
     }
     
     var emojis: [EmojiArt.Emoji] {
