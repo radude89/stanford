@@ -7,7 +7,9 @@
 
 import CoreData
 import Combine
+import MapKit
 
+// MARK: - Public API
 extension Airport {
     static func withICAO(_ icao: String, context: NSManagedObjectContext) -> Airport {
         let request = fetchRequest(NSPredicate(format: "icao_ = %@", icao))
@@ -54,6 +56,7 @@ extension Airport {
     }
 }
 
+// MARK: - Parameters
 extension Airport: Comparable {
     var icao: String {
         get { icao_! }
@@ -72,6 +75,7 @@ extension Airport: Comparable {
     }
 }
 
+// MARK: - Fetch
 extension Airport {
     static func fetchRequest(_ predicate: NSPredicate) -> NSFetchRequest<Airport> {
         let request = NSFetchRequest<Airport>(entityName: "Airport")
@@ -102,4 +106,19 @@ extension Airport {
     
     private static var flightAwareRequest: EnrouteRequest!
     private static var flightAwareResultsCancellable: AnyCancellable?
+}
+
+// MARK: - MKAnnotation
+extension Airport: MKAnnotation {
+    public var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
+    public var title: String? {
+        name ?? icao
+    }
+    
+    public var subtitle: String? {
+        location
+    }
 }

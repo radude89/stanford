@@ -102,7 +102,7 @@ final class EmojiArtDocument: ObservableObject, Identifiable {
     
     private func fetchBackgroundImageData() {
         backgroundImage = nil
-        guard let url = emojiArt.backgroundURL else {
+        guard let url = emojiArt.backgroundURL?.imageURL else {
             return
         }
         
